@@ -23,5 +23,4 @@ const app = initializeApp(firebaseConfig);
 const db = getStorage(app);
 const auth = getAuth(app);
 const analytics = getAnalytics(app);
-await new Promise(resolve => setTimeout(resolve,1000));
 export default {app, db, auth, analytics};
