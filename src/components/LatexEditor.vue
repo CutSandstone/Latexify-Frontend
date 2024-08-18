@@ -1,13 +1,24 @@
 <script setup>
-// import {useRoute} from 'vue-router';
-// const route = useRoute();
-// const params = route.params;
-  import { ref, watch } from 'vue';
+  import { ref, watch, defineProps } from 'vue';
+  const props = defineProps({
+    onChange: Function,
+    val: String,
+  });
   const katex = import('katex');
   const markdown = import("markdown");
-  const html = ref('');
+  const html = ref(props.val);
   const rendered = ref('');
+  katex.then((k) => {
+    markdown.then((m) => {
+      rendered.value = m.markdown.toHTML(html.value).replace(/(?<!\\)(?:\\\\)*\$(.+?)(?<!\\)(?:\\\\)*\$/gm,(_,a) => {
+        return k.default.renderToString(a,{throwOnError: false,output: "mathml"});
+      }).replace(/(?<!\\)\\(?:\\\\)*\$/gm,(m) => {
+        return m.substring(1);
+      });
+    });
+  });
   watch(html, () => {
+    if(props.onChange) props.onChange(html.value);
     katex.then((k) => {
       markdown.then((m) => {
         rendered.value = m.markdown.toHTML(html.value).replace(/(?<!\\)(?:\\\\)*\$(.+?)(?<!\\)(?:\\\\)*\$/gm,(_,a) => {

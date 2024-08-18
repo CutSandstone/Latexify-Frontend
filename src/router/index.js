@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '@/pages/HomePage.vue';
-import LatexEditor from '@/pages/LatexEditor.vue';
 import NotFound from '@/pages/NotFound.vue';
-import NewProject from '@/components/NewProject.vue';
+import NewProject from '@/pages/NewProject.vue';
+import AccountPage from '@/pages/AccountPage.vue';
+import ProjectsPage from '@/pages/ProjectsPage.vue';
+import CreateNewProject from '@/pages/CreateNewProject.vue';
 
 const routes = [
   {
@@ -14,9 +16,21 @@ const routes = [
     name: 'NewProject',
     component: NewProject
   },{
-    path: '/editor/:id',
+    path: '/editor/:user/:name',
     name: 'Editor',
-    component: LatexEditor,
+    component: NewProject,
+  },{
+    path: '/account',
+    name: 'Account',
+    component: AccountPage,
+  },{
+    path: '/new',
+    name: "New",
+    component: CreateNewProject,
+  },{
+    path: '/projects',
+    name: 'Projects',
+    component: ProjectsPage,
   },{
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
