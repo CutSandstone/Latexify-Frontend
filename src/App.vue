@@ -7,9 +7,6 @@
   <script>
   export default {
     name: 'App',
-    async beforeMount() {
-      await new Promise(resolve => setTimeout(resolve,1000));
-    }
   };
   </script>
   

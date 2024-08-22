@@ -2,9 +2,17 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import auth from './firebase';
-const app = createApp(App);
+import { setPersistence, browserLocalPersistence, getAuth } from 'firebase/auth';
 
-app.use(router);
-app.config.globalProperties.$auth = auth;
+async function startApp() {
+  try {
+    // Set Firebase auth persistence
+    await setPersistence(getAuth(), browserLocalPersistence);
 
-app.mount('#app');
+    // Only create and mount the Vue app after persistence is set
+    createApp(App).use(router).mount('#app');
+  } catch (error) {
+    console.error('Failed to set Firebase persistence:', error);
+  }
+}
+startApp();

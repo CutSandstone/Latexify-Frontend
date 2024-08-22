@@ -5,6 +5,7 @@
   import { ref } from 'vue';
   import { getAuth } from 'firebase/auth';
   import { getStorage, ref as storageRef, getDownloadURL, uploadString } from 'firebase/storage';
+  import router from '@/router';
   const auth = getAuth();
   const u = auth.currentUser;
   const route = useRoute();
@@ -26,9 +27,8 @@
           defaultVal.value = t;
         });
       }).catch((e) => console.log(e));
-    }).catch((e) => {
+    }).catch(() => {
       uploadString(project,"");
-      console.log(e);
       defaultVal.value = "";
     });
   }else defaultVal.value = "";
@@ -54,7 +54,8 @@
     Project Name: {{ name }}
   </div>
   <div v-if="defaultVal !== null">
-    <button @click="save">Save</button>
+    <button @click="save" v-if="user !== undefined && name !== undefined">Save</button>
+    <button @click="router.push(`/settings/${user}/${name}`)" v-if="user !== undefined && name !== undefined">project settings</button>
     <LatexEditor :onChange="update" :val="defaultVal"></LatexEditor>
   </div>
 </template>

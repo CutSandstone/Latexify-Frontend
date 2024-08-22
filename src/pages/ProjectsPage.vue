@@ -14,7 +14,6 @@ if(user === null || !user.emailVerified){
 }
 const db = getStorage();
 const projects = storageRef(db,`Projects/${user.uid}`);
-console.log(projects);
 listAll(projects).then((res) => {
   names.value = [];
   res.items.forEach((item) => {

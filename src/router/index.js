@@ -5,6 +5,7 @@ import NewProject from '@/pages/NewProject.vue';
 import AccountPage from '@/pages/AccountPage.vue';
 import ProjectsPage from '@/pages/ProjectsPage.vue';
 import CreateNewProject from '@/pages/CreateNewProject.vue';
+import ProjectSettings from '@/pages/ProjectSettings.vue';
 
 const routes = [
   {
@@ -31,6 +32,10 @@ const routes = [
     path: '/projects',
     name: 'Projects',
     component: ProjectsPage,
+  },{
+    path: '/settings/:user/:name',
+    name: 'ProjectSettings',
+    component: ProjectSettings,
   },{
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
